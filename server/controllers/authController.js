@@ -1,5 +1,6 @@
 //Auch controllers
 const User = require("../modals/userModal");
+const jwt = require("jsonwebtoken");
 
 const { comparePassword, hashPassword } = require("../utils/auth");
 
@@ -36,5 +37,35 @@ exports.register = async (req, res) => {
   } catch (error) {
     console.log(error);
     return res.status(404).send("Error Please Try again");
+  }
+};
+
+exports.login = async (req, res) => {
+  try {
+    console.log(req.body);
+    const { email, password } = req.body;
+
+    const user = await User.findOne({ email }).exec();
+    if (!user) return res.status(400).send("No user foud with this Email");
+    const match = await comparePassword(password, user.password);
+    //create jwt
+
+    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "7d",
+    });
+
+    //send user p
+    user.password = undefined;
+    //send token in cookie
+    res.cookie("token", token, {
+      httpOnly: true,
+      // secure :true //only workd in prod
+    });
+
+    //send user as json response
+    res.json(user);
+  } catch (err) {
+    console.log(err);
+    return res.status(400).send("Error!, Try again");
   }
 };
