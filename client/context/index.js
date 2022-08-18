@@ -1,12 +1,12 @@
-import { useReducer, createCotext } from "react";
+import { useReducer, createContext, useEffect } from "react";
+import { useRouter } from "next/router";
 
 //initial state
-
 const initialState = {
   user: null,
 };
 
-const Context = createCotext();
+const Context = createContext();
 
 const rootReducer = (state, action) => {
   switch (action.type) {
@@ -22,6 +22,13 @@ const rootReducer = (state, action) => {
 // context provider
 const Provider = ({ children }) => {
   const [state, dispatch] = useReducer(rootReducer, initialState);
+
+  useEffect(() => {
+    dispatch({
+      type: "LOGIN",
+      payload: JSON.parse(window.localStorage.getItem("user")),
+    });
+  }, []);
 
   return (
     <Context.Provider value={{ state, dispatch }}> {children}</Context.Provider>
