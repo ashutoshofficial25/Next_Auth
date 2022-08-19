@@ -5,18 +5,20 @@ import {
   LoginOutlined,
   UserAddOutlined,
   LogoutOutlined,
+  CoffeeOutlned,
 } from "@ant-design/icons";
 import { useContext, useEffect, useState } from "react";
 import { Context } from "../context";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
-const { Item } = Menu;
+const { Item, SubMenu } = Menu;
 
 const TopNav = () => {
   const [current, setCurrent] = useState("");
   const router = useRouter();
   const { state, dispatch } = useContext(Context);
+  const { user } = state;
 
   useEffect(() => {
     process.browser && setCurrent(window.location.pathname);
@@ -44,29 +46,39 @@ const TopNav = () => {
         </Link>
       </Item>
 
-      <Item
-        key="/login"
-        onClick={(e) => setCurrent(e.key)}
-        icon={<LoginOutlined />}
-      >
-        <Link href="/login">
-          <a>Login</a>
-        </Link>
-      </Item>
+      {user === null && (
+        <>
+          <Item
+            key="/login"
+            onClick={(e) => setCurrent(e.key)}
+            icon={<LoginOutlined />}
+          >
+            <Link href="/login">
+              <a>Login</a>
+            </Link>
+          </Item>
 
-      <Item
-        key="/register"
-        onClick={(e) => setCurrent(e.key)}
-        icon={<UserAddOutlined />}
-      >
-        <Link href="/register">
-          <a>Register</a>
-        </Link>
-      </Item>
+          <Item
+            key="/register"
+            onClick={(e) => setCurrent(e.key)}
+            icon={<UserAddOutlined />}
+          >
+            <Link href="/register">
+              <a>Register</a>
+            </Link>
+          </Item>
+        </>
+      )}
 
-      <Item onClick={logout} icon={<LogoutOutlined />} className="float-right">
-        Logout
-      </Item>
+      {user !== null && (
+        <Item
+          onClick={logout}
+          icon={<LogoutOutlined />}
+          className="float-right"
+        >
+          Logout
+        </Item>
+      )}
     </Menu>
   );
 };
