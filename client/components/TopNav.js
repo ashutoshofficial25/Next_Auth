@@ -12,7 +12,7 @@ import { Context } from "../context";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
-const { Item, SubMenu } = Menu;
+const { Item, SubMenu, ItemGroup } = Menu;
 
 const TopNav = () => {
   const [current, setCurrent] = useState("");
@@ -71,13 +71,22 @@ const TopNav = () => {
       )}
 
       {user !== null && (
-        <Item
-          onClick={logout}
-          icon={<LogoutOutlined />}
-          className="float-right"
-        >
-          Logout
-        </Item>
+        <SubMenu title="---">
+          <ItemGroup>
+            <Item
+              onClick={logout}
+              icon={<LogoutOutlined />}
+              className="float-right"
+            >
+              Logout
+            </Item>
+            <Item>
+              <Link href="/user">
+                <a>User</a>
+              </Link>
+            </Item>
+          </ItemGroup>
+        </SubMenu>
       )}
     </Menu>
   );
