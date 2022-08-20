@@ -41,7 +41,7 @@ const Provider = ({ children }) => {
     function (error) {
       //any status that fails outside the range of 200 cause this function
       let res = error.response;
-      if (res.status == 401 && res.connfig && !res.connfig.__isRetryRequest) {
+      if (res.status == 401 && res.config && !res.config.__isRetryRequest) {
         return new Promise((resolve, reject) => {
           axios
             .get("/api/logout")
