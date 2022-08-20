@@ -41,7 +41,7 @@ const Provider = ({ children }) => {
     function (error) {
       //any status that fails outside the range of 200 cause this function
       let res = error.response;
-      if (res.status == 401 && res.connfig && !res.connfig._isRetryRequest) {
+      if (res.status == 401 && res.connfig && !res.connfig.__isRetryRequest) {
         return new Promise((resolve, reject) => {
           axios
             .get("/api/logout")
@@ -60,6 +60,14 @@ const Provider = ({ children }) => {
       return Promise.reject(error);
     }
   );
+
+  useEffect(() => {
+    const getCsrfToken = async () => {
+      const { data } = await axios.get("/api/csrf-token");
+      axios.defaults.headers["X-CSRF-Token"] = data.getCsrfToken;
+    };
+    getCsrfToken();
+  });
 
   return (
     <Context.Provider value={{ state, dispatch }}> {children}</Context.Provider>

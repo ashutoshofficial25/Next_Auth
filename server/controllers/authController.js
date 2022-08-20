@@ -78,3 +78,13 @@ exports.logout = async (req, res) => {
     console.log(error);
   }
 };
+
+exports.currnetUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id).select("-password").exec();
+    console.log("currnet user", user);
+    return res.json(user);
+  } catch (error) {
+    console.log(error);
+  }
+};
