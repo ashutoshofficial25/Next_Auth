@@ -85,6 +85,11 @@ const TopNav = () => {
                 <a>User</a>
               </Link>
             </Item>
+            <Item>
+              <Link href="/todos">
+                <a>Your Tasks</a>
+              </Link>
+            </Item>
           </ItemGroup>
         </SubMenu>
       )}

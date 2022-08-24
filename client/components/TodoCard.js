@@ -10,22 +10,22 @@ import React, { useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { red } from "@mui/material/colors";
 
-const TodoCard = ({ title, taskDesc }) => {
-  const [item, setItem] = useState([]);
+const TodoCard = ({ item }) => {
+  // const [item, setItem] = useState([]);
 
   return (
     <Card
       elevation={8}
       sx={{ textAlign: "center", borderTop: "3px dashed red" }}
     >
-      <CardHeader title={title} />
+      <CardHeader title={item.taskTitle} />
       <Divider />
       <CardContent>
         <TextField
-          label={taskDesc == "" ? "Enter task description. . ." : ""}
+          label="Enter task description. . ."
           multiline
           rows={5}
-          value={taskDesc}
+          value={item.taskDesc}
           placeholder="Start writing . . ."
         />
       </CardContent>

@@ -6,7 +6,6 @@ import {
   CardHeader,
   Container,
   Divider,
-  FormControl,
   Grid,
   TextField,
 } from "@mui/material";
@@ -14,30 +13,27 @@ import { Box } from "@mui/system";
 
 import CustomDialog from "../components/CustomDialog";
 import TodoCard from "../components/TodoCard";
+import { toast } from "react-toastify";
+import UserRoutes from "../components/routes/UserRoutes";
 
 const TodoPage = () => {
   const [open, setOpen] = useState(false);
-  const [taskTitle, setTaskTitle] = useState("");
-  const [taskDesc, setTaskDesc] = useState("");
-  const [card, setCard] = useState([{}]);
+  const [card, setCard] = useState([]);
   const [input, setInput] = useState({
     taskTitle: "",
     taskDesc: "",
   });
 
-  // const addNewCard = (item) => {
-  //   setCard([...card, item]);
-  // };
   const handleChange = (e) => {
     e.preventDefault();
-    const taskTitle = e.target.taskTitle;
-    const taskDesc = e.target.taskDesc;
-    setInput({ ...input, taskTitle, taskDesc });
+    setInput({ ...input, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setCard([...card], input);
+    setCard([...card, input]);
+    setOpen(false);
+    toast.success("Task Added Successfully");
   };
 
   const handleClick = () => {
@@ -46,55 +42,48 @@ const TodoPage = () => {
   const handleClose = () => {
     setOpen(false);
   };
-  // const handleAddTask = () => {
-  //   setOpen(false);
-  //   addNewCard();
-  // };
 
   const content = () => {
     return (
       <form onSubmit={handleSubmit}>
-        <FormControl>
-          <TextField
-            id="taskTitle"
-            type="text"
-            sx={{ marginBottom: "10px" }}
-            label="Enter task Title"
-            name="taskTitle"
-            value={input.taskTitle || ""}
-            onChange={handleChange}
-            fullWidth
-          />
-          <br />
-          <TextField
-            sx={{ marginBottom: "10px" }}
-            label="Enter task description. . ."
-            multiline
-            fullWidth
-            type="text"
-            id="taskDesc"
-            name="taskDesc"
-            rows={5}
-            value={input.taskDesc || ""}
-            onChange={handleChange}
-            placeholder="Start writing . . ."
-          />
-          <br />
-          <input type="submit" />
-          <Button
-            // disabled={taskTitle == "" ? true : false}
-            type="submit"
-            variant="contained"
-          >
-            Add
-          </Button>
-        </FormControl>
+        <TextField
+          id="taskTitle"
+          type="text"
+          sx={{ marginBottom: "10px" }}
+          label="Enter task Title"
+          name="taskTitle"
+          fullWidth
+          value={input.taskTitle}
+          onChange={handleChange}
+        />
+        <br />
+        <TextField
+          sx={{ marginBottom: "10px" }}
+          label="Enter task description. . ."
+          multiline
+          fullWidth
+          type="text"
+          id="taskDesc"
+          name="taskDesc"
+          rows={5}
+          value={input.taskDesc}
+          onChange={handleChange}
+          placeholder="Start writing . . ."
+        />
+        <br />
+        <Button
+          disabled={input.taskTitle == "" ? true : false}
+          type="submit"
+          variant="contained"
+        >
+          Add
+        </Button>
       </form>
     );
   };
 
   return (
-    <Fragment>
+    <UserRoutes>
       <Container>
         <Card>
           <Box py={5} textAlign={"center"}>
@@ -107,8 +96,8 @@ const TodoPage = () => {
           <CardContent sx={{ backgroundColor: "#103311" }}>
             <Grid container spacing={2}>
               {card.map((item) => (
-                <Grid item xs={3}>
-                  <TodoCard item={item} title={taskTitle} taskDesc={taskDesc} />
+                <Grid key={item.taskTitle} item xs={3}>
+                  <TodoCard item={item} />
                 </Grid>
               ))}
             </Grid>
@@ -123,7 +112,7 @@ const TodoPage = () => {
       >
         {content()}
       </CustomDialog>
-    </Fragment>
+    </UserRoutes>
   );
 };
 
