@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import {
   Button,
   Card,
@@ -16,6 +16,7 @@ import TodoCard from "../components/TodoCard";
 import { toast } from "react-toastify";
 import UserRoutes from "../components/routes/UserRoutes";
 import axios from "axios";
+import { Context } from "../context";
 
 const TodoPage = () => {
   const [open, setOpen] = useState(false);
@@ -24,6 +25,8 @@ const TodoPage = () => {
     taskTitle: "",
     taskDesc: "",
   });
+  const { state } = useContext(Context);
+  const { user } = state;
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -37,15 +40,14 @@ const TodoPage = () => {
       const { data } = await axios.post("/api/addTodo", {
         title: input.taskTitle,
         taskDesc: input.taskDesc,
+        userId: user._id,
       });
-      console.log(data);
       toast.success("Task Added Successfully");
     } catch (err) {
       console.log(err);
       toast.error(err.response.data);
     }
-
-    setCard([...card, input]);
+    getTodos(user._id);
     setOpen(false);
   };
 
@@ -56,7 +58,16 @@ const TodoPage = () => {
     setOpen(false);
   };
 
-  const getTodos = async () => {};
+  const getTodos = async (userId) => {
+    const { data } = await axios.get(`/api/${userId}`);
+    setCard(data.data);
+  };
+
+  useEffect(() => {
+    if (user) {
+      getTodos(user?._id);
+    }
+  }, [user]);
 
   const content = () => {
     return (
@@ -110,11 +121,12 @@ const TodoPage = () => {
           <Divider sx={{ border: "1px solid #001122" }} />
           <CardContent sx={{ backgroundColor: "#103311" }}>
             <Grid container spacing={2}>
-              {card.map((item) => (
-                <Grid key={item.taskTitle} item xs={3}>
-                  <TodoCard item={item} />
-                </Grid>
-              ))}
+              {card &&
+                card.map((item) => (
+                  <Grid key={item._id} item xs={3}>
+                    <TodoCard item={item} />
+                  </Grid>
+                ))}
             </Grid>
           </CardContent>
         </Card>

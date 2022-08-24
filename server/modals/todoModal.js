@@ -10,6 +10,9 @@ const todoSchema = new mongoose.Schema(
     description: {
       type: String,
     },
+    user_id: {
+      type: mongoose.Schema.Types.ObjectId,
+    },
   },
   { timestamps: true }
 );

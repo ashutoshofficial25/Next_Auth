@@ -18,15 +18,14 @@ const TodoCard = ({ item }) => {
       elevation={8}
       sx={{ textAlign: "center", borderTop: "3px dashed red" }}
     >
-      <CardHeader title={item.taskTitle} />
+      <CardHeader title={item.title} />
       <Divider />
       <CardContent>
         <TextField
           label="Enter task description. . ."
           multiline
           rows={5}
-          value={item.taskDesc}
-          placeholder="Start writing . . ."
+          value={item.description}
         />
       </CardContent>
       <Box pr={3} textAlign="end">
