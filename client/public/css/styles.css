@@ -9,3 +9,6 @@ body {
   color: #fff;
   padding: 40px;
 }
+.delete-icon {
+  cursor: pointer;
+}

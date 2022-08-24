@@ -43,12 +43,17 @@ const TodoPage = () => {
         userId: user._id,
       });
       toast.success("Task Added Successfully");
+      resetValues();
     } catch (err) {
       console.log(err);
       toast.error(err.response.data);
     }
     getTodos(user._id);
     setOpen(false);
+  };
+
+  const resetValues = () => {
+    setInput({ taskTitle: "", taskDesc: "" });
   };
 
   const handleClick = () => {
