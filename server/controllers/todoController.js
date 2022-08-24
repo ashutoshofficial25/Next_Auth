@@ -19,7 +19,7 @@ exports.addTodo = async (req, res) => {
 exports.getTodoByUserId = async (req, res) => {
   try {
     const { userId } = req.params;
-    console.log(userId);
+    // console.log(userId);
     const todos = await Todo.find({ user_id: userId });
 
     res.status(200).json({ message: "success", data: todos });

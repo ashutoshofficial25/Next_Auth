@@ -38,7 +38,7 @@ const Login = () => {
       //save in localstorage
       window.localStorage.setItem("user", JSON.stringify(data));
       // redirect
-      router.push("/");
+      // router.push("/");
       toast.success("Login Successful!");
       setLoading(false);
       // console.log("Login Response", data);

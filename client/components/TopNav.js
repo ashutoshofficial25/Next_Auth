@@ -30,7 +30,7 @@ const TopNav = () => {
     });
     window.localStorage.removeItem("user");
     const data = await axios.get("/api/logout");
-    toast.success(data.data.message);
+    toast(data.data.message);
     router.push("/login");
   };
 
