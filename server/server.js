@@ -35,10 +35,10 @@ fs.readdirSync("./routes").map((r) =>
   app.use("/api", require(`./routes/${r}`))
 );
 //csrf protection
-app.use(csrfProtection);
-app.get("/api/csrf-token", (req, res) => {
-  res.json({ csrfToken: req.csrfToken });
-});
+// app.use(csrfProtection);
+// app.get("/api/csrf-token", (req, res) => {
+//   res.json({ csrfToken: req.csrfToken });
+// });
 
 //port
 const port = process.env.PORT || 5000;

@@ -15,6 +15,7 @@ import CustomDialog from "../components/CustomDialog";
 import TodoCard from "../components/TodoCard";
 import { toast } from "react-toastify";
 import UserRoutes from "../components/routes/UserRoutes";
+import axios from "axios";
 
 const TodoPage = () => {
   const [open, setOpen] = useState(false);
@@ -29,11 +30,23 @@ const TodoPage = () => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    try {
+      const { data } = await axios.post("/api/addTodo", {
+        title: input.taskTitle,
+        taskDesc: input.taskDesc,
+      });
+      console.log(data);
+      toast.success("Task Added Successfully");
+    } catch (err) {
+      console.log(err);
+      toast.error(err.response.data);
+    }
+
     setCard([...card, input]);
     setOpen(false);
-    toast.success("Task Added Successfully");
   };
 
   const handleClick = () => {
@@ -42,6 +55,8 @@ const TodoPage = () => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const getTodos = async () => {};
 
   const content = () => {
     return (
@@ -84,7 +99,7 @@ const TodoPage = () => {
 
   return (
     <UserRoutes>
-      <Container>
+      <Container style={{ marginTop: "10vh" }}>
         <Card>
           <Box py={5} textAlign={"center"}>
             <CardHeader title="Task List" />
