@@ -28,3 +28,32 @@ exports.getTodoByUserId = async (req, res) => {
     res.status(404).json({ message: "something went wrong", error });
   }
 };
+
+exports.updateTodo = async (req, res) => {
+  try {
+    const { todoId } = req.params;
+    const { title, description } = req.body;
+    console.log(title, description);
+    const newTodo = await Todo.findByIdAndUpdate(
+      { _id: todoId },
+      { title: title, description: description },
+      { new: true }
+    );
+    res.status(200).json({ message: "Updated Successfully", newTodo });
+  } catch (error) {
+    console.log(error);
+    res.status(404).json({ message: "Something went wrong", error });
+  }
+};
+
+exports.deleteTodo = async (req, res) => {
+  try {
+    const { todoId } = req.params;
+
+    const todo = await Todo.findByIdAndDelete(todoId);
+    res.status(204).json({ message: "Deleted Successfully" });
+  } catch (error) {
+    console.log(error);
+    res.status(404).json({ message: "error", error });
+  }
+};
