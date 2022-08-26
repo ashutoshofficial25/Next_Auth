@@ -1,9 +1,11 @@
 const Index = () => {
   return (
-    <>
-      <h1 className="jumbotron text-center bg-primary"> hello form </h1>
-      <p> Form nextjs</p>
-    </>
+    <hero className="heroSection">
+      <div className="hero-container">
+        <div className="text-center">some logo type</div>
+        <h2 className="text-center"> Some thing</h2>
+      </div>
+    </hero>
   );
 };
 
