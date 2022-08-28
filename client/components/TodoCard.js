@@ -6,16 +6,21 @@ import {
   Divider,
   TextField,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { toast } from "react-toastify";
 import { red } from "@mui/material/colors";
+import { Context } from "../context";
 
-const TodoCard = ({ item }) => {
+const TodoCard = ({ item, getTodos }) => {
+  const { state } = useContext(Context);
+  const { user } = state;
+
   const handleDelete = async (id) => {
     try {
       const data = await axios.delete(`/api/delete/${id}`);
+      getTodos(user?._id);
       toast("deleted successfully");
     } catch (error) {
       console.log(error);

@@ -129,7 +129,7 @@ const TodoPage = () => {
               {card &&
                 card.map((item) => (
                   <Grid key={item._id} item xs={3}>
-                    <TodoCard item={item} />
+                    <TodoCard item={item} getTodos={getTodos} />
                   </Grid>
                 ))}
             </Grid>
