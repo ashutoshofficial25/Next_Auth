@@ -35,44 +35,43 @@ const TopNav = () => {
   };
 
   return (
-    <Menu mode="horizontal" selectedKeys={[current]}>
+    <Menu className="top-nav" mode="horizontal" selectedKeys={[current]}>
       <Item
         key="/"
         onClick={(e) => setCurrent(e.key)}
-        icon={<AppstoreOutlined />}
+        icon={<AppstoreOutlined style={{ fontSize: "24px" }} />}
       >
         <Link href="/">
-          <a>App</a>
+          <a>Home</a>
         </Link>
       </Item>
+      <div className="top-nav">
+        {user === null && (
+          <>
+            <Item
+              key="/login"
+              onClick={(e) => setCurrent(e.key)}
+              icon={<LoginOutlined />}
+            >
+              <Link href="/login">
+                <a>Login</a>
+              </Link>
+            </Item>
 
-      {user === null && (
-        <>
-          <Item
-            key="/login"
-            onClick={(e) => setCurrent(e.key)}
-            icon={<LoginOutlined />}
-          >
-            <Link href="/login">
-              <a>Login</a>
-            </Link>
-          </Item>
+            <Item
+              key="/register"
+              onClick={(e) => setCurrent(e.key)}
+              icon={<UserAddOutlined />}
+            >
+              <Link href="/register">
+                <a>Register</a>
+              </Link>
+            </Item>
+          </>
+        )}
 
-          <Item
-            key="/register"
-            onClick={(e) => setCurrent(e.key)}
-            icon={<UserAddOutlined />}
-          >
-            <Link href="/register">
-              <a>Register</a>
-            </Link>
-          </Item>
-        </>
-      )}
-
-      {user !== null && (
-        <SubMenu title="---">
-          <ItemGroup>
+        {user !== null && (
+          <div className="user-nav">
             <Item
               onClick={logout}
               icon={<LogoutOutlined />}
@@ -90,9 +89,9 @@ const TopNav = () => {
                 <a>Your Tasks</a>
               </Link>
             </Item>
-          </ItemGroup>
-        </SubMenu>
-      )}
+          </div>
+        )}
+      </div>
     </Menu>
   );
 };

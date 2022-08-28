@@ -1,20 +1,34 @@
 body {
   background-color: #00897b;
 }
+Menu {
+  margin-block-start: 0em;
+  margin-block-end: 0em;
+}
+.top-nav {
+  height: 10vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 20px;
+  font-weight: 700;
+}
+.user-nav {
+  display: flex;
+}
+
 .square {
   border-radius: 0px;
 }
 .jumbotron {
-  background-image: linear-gradient(to right, #007bff, #000);
+  padding-top: 15vh;
   color: #fff;
-  padding: 40px;
+  /* padding: 40px; */
 }
 .delete-icon {
   cursor: pointer;
 }
 
-.heroSection {
-}
 .hero-container {
   background-image: url("../assets/hero.jpg");
   box-sizing: border-box;
@@ -22,4 +36,24 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+  position: relative;
+}
+
+.hero-layout {
+  background-color: #00897bae;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 15vh;
+}
+.image-logo {
+  width: 150px;
+}
+.left-btn {
+  margin-right: 30px;
 }
