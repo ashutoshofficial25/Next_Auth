@@ -73,3 +73,13 @@ ul {
 .left-btn {
   margin-right: 30px;
 }
+
+.user-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2vh;
+  /* justify-content: center; */
+}
+.user-profile :hover {
+}

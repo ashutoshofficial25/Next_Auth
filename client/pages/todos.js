@@ -116,7 +116,7 @@ const TodoPage = () => {
   return (
     <UserRoutes>
       <Container style={{ marginTop: "10vh" }}>
-        <Card>
+        <Card elevation={10}>
           <Box py={5} textAlign={"center"}>
             <CardHeader title="Task List" />
             <Button variant="contained" onClick={handleClick}>
