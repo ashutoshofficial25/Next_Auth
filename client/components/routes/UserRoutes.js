@@ -5,7 +5,7 @@ import { SyncOutlined } from "@ant-design/icons";
 
 const UserRoutes = ({ children }) => {
   const [ok, setOk] = useState(false);
-  const { router } = useRouter();
+  const router = useRouter();
 
   useEffect(() => {
     const fetchUser = async () => {

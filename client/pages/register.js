@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { SyncOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import { Context } from "../context";
-import { useRouter } from "next/Router";
+import { useRouter } from "next/router";
 
 const Register = () => {
   const [name, setName] = useState("");
