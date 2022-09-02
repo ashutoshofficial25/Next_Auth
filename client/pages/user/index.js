@@ -1,16 +1,41 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Context } from "../../context";
 import UserRoutes from "../../components/routes/UserRoutes";
-import { Avatar, Button, Card, CardContent, TextField } from "@mui/material";
-import { UserOutlined } from "@ant-design/icons";
+import {
+  Avatar,
+  Badge,
+  Box,
+  Button,
+  Card,
+  CardContent,
+  TextField,
+} from "@mui/material";
+import { UserOutlined, CameraOutlined } from "@ant-design/icons";
 import { Container } from "@mui/system";
 
 const userProfile = () => {
   const { state } = useContext(Context);
   const { user } = state;
+  const [loading, setLoading] = useState(false);
 
-  const updateDp = () => {
-    console.log("update image");
+  const updateDp = (e) => {
+    const file = e.target.files[0];
+    setLoading(true);
+    if (!file) {
+      setLoading(false);
+      return false;
+    }
+    if (!file.name.match(/\.(jpg||jpeg||png)$/)) {
+      setLoading(false);
+      return false;
+    }
+    // api to update
+
+    // avatarPic(currentUser.user, file, config).then((result) => {
+    //   //console.log(result);
+    //   dispatch(updateAvatar(result));
+    //   setLoading(false);
+    // });
   };
 
   return (
@@ -19,13 +44,42 @@ const userProfile = () => {
       <Container>
         {user && (
           <Card elevation={10} className="user-profile">
-            <Avatar
-              className="userDp"
-              alt={user.name}
-              src={user.picture ? user.picture : <UserOutlined />}
-              sx={{ width: 150, height: 150 }}
-              onClick={updateDp}
+            <input
+              type="file"
+              style={{ display: "none" }}
+              id="contained-button-file"
+              onChange={updateDp}
             />
+            <Box
+              display="flex"
+              alignItems="center"
+              flexDirection="column"
+              textAlign="center"
+            >
+              <label htmlFor="contained-button-file">
+                <Badge
+                  overlap="circle"
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "right",
+                  }}
+                  badgeContent={
+                    <CameraOutlined
+                      htmlFor="contained-button-file"
+                      style={{ color: "#ff9901" }}
+                    />
+                  }
+                >
+                  <Avatar
+                    htmlFor="contained-button-file"
+                    className="userDp"
+                    alt={user.name}
+                    sx={{ width: 150, height: 150 }}
+                    src={user.picture ? user.picture : <UserOutlined />}
+                  />
+                </Badge>
+              </label>
+            </Box>
             <br />
             <CardContent>
               <form>
