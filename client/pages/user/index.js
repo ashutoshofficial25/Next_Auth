@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Context } from "../../context";
 import UserRoutes from "../../components/routes/UserRoutes";
 import {
@@ -12,15 +12,23 @@ import {
 } from "@mui/material";
 import { UserOutlined, CameraOutlined } from "@ant-design/icons";
 import { Container } from "@mui/system";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const userProfile = () => {
   const { state } = useContext(Context);
   const { user } = state;
   const [loading, setLoading] = useState(false);
+  const [currnetUser, setCurrnetuser] = useState(user);
+
   const [input, setInput] = useState({
     name: user?.name,
     email: user?.email,
   });
+
+  const getUser = async () => {
+    const { data } = await axios.get(`/api/getUserById/${user?._id}`);
+  };
 
   const updateDp = (e) => {
     const file = e.target.files[0];
@@ -36,22 +44,32 @@ const userProfile = () => {
       return false;
     }
     // api to update
-
-    // avatarPic(currentUser.user, file, config).then((result) => {
-    //   //console.log(result);
-    //   dispatch(updateAvatar(result));
-    //   setLoading(false);
-    // });
   };
+
+  useEffect(() => {
+    setInput({
+      name: user?.name,
+      email: user?.email,
+    });
+  }, [user]);
 
   const handleChange = (e) => {
     e.preventDefault();
     setInput({ ...input, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(input.name, input.email);
+    let userId = user?._id;
+    const { data } = await axios.patch(`/api/updateUser/${userId}`, {
+      name: input.name,
+      email: input.email,
+    });
+
+    if (data) {
+      toast("Updatd Successfully");
+      // getUser();
+    }
   };
 
   return (
