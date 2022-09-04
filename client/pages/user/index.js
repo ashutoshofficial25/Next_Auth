@@ -17,9 +17,15 @@ const userProfile = () => {
   const { state } = useContext(Context);
   const { user } = state;
   const [loading, setLoading] = useState(false);
+  const [input, setInput] = useState({
+    name: user?.name,
+    email: user?.email,
+  });
 
   const updateDp = (e) => {
     const file = e.target.files[0];
+
+    console.log(file?.name);
     setLoading(true);
     if (!file) {
       setLoading(false);
@@ -36,6 +42,16 @@ const userProfile = () => {
     //   dispatch(updateAvatar(result));
     //   setLoading(false);
     // });
+  };
+
+  const handleChange = (e) => {
+    e.preventDefault();
+    setInput({ ...input, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(input.name, input.email);
   };
 
   return (
@@ -66,7 +82,13 @@ const userProfile = () => {
                   badgeContent={
                     <CameraOutlined
                       htmlFor="contained-button-file"
-                      style={{ color: "#ff9901" }}
+                      style={{
+                        color: "#ff9901",
+                        fontSize: "24px",
+                        position: "absolute",
+                        top: "125px",
+                        left: "105px",
+                      }}
                     />
                   }
                 >
@@ -82,12 +104,15 @@ const userProfile = () => {
             </Box>
             <br />
             <CardContent>
-              <form>
+              <form onSubmit={handleSubmit}>
                 <TextField
                   required
-                  id="outlined-required"
+                  id="name"
                   label="Your Name"
+                  name="name"
+                  onChange={handleChange}
                   defaultValue={user.name}
+                  value={input.name}
                   variant="standard"
                 />
                 <br />
@@ -95,14 +120,17 @@ const userProfile = () => {
 
                 <TextField
                   required
-                  id="outlined-required"
+                  id="email"
                   label="Your Email"
+                  name="email"
+                  value={input.email}
                   defaultValue={user.email}
+                  onChange={handleChange}
                   variant="standard"
                 />
                 <br />
                 <br />
-                <Button variant="contained" fullWidth>
+                <Button variant="contained" type="submit" fullWidth>
                   Update
                 </Button>
               </form>
