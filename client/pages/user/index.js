@@ -67,6 +67,8 @@ const userProfile = () => {
     });
 
     if (data) {
+      localStorage.removeItem("user");
+      localStorage.setItem("user", data.data);
       toast("Updatd Successfully");
       // getUser();
     }
