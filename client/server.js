@@ -15,7 +15,7 @@ app
       server.use(
         "/api",
         createProxyMiddleware({
-          target: "https://next-todo-api.herokuapp.com/",
+          target: "http://localhost:5000",
           changeOrigin: true,
         })
       );
