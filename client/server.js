@@ -24,7 +24,7 @@ app
       server.use(
         "/api",
         createProxyMiddleware({
-          target: "https://next-todo-api.herokuapp.com",
+          target: `${process.env.PROD_PORT}`,
           changeOrigin: true,
         })
       );
