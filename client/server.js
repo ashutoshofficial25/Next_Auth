@@ -1,7 +1,7 @@
 const express = require("express");
 const next = require("next");
 const { createProxyMiddleware } = require("http-proxy-middleware");
-
+require("dotenv").config();
 const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
 const handle = app.getRequestHandler();
@@ -15,7 +15,16 @@ app
       server.use(
         "/api",
         createProxyMiddleware({
-          target: "http://localhost:5000",
+          target: `http://localhost:${process.env.PORT}`,
+          changeOrigin: true,
+        })
+      );
+    }
+    if (!dev) {
+      server.use(
+        "/api",
+        createProxyMiddleware({
+          target: "https://next-todo-api.herokuapp.com",
           changeOrigin: true,
         })
       );
@@ -27,7 +36,7 @@ app
       if (err) {
         throw err;
       }
-      console.log("reply to localhost:5000");
+      console.log(`${process.env.PROD}`);
     });
   })
   .catch((err) => {
