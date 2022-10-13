@@ -14,6 +14,7 @@ import { UserOutlined, CameraOutlined } from "@ant-design/icons";
 import { Container } from "@mui/system";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { URL } from "../../context/config";
 
 const userProfile = () => {
   const { state } = useContext(Context);
@@ -27,7 +28,7 @@ const userProfile = () => {
   });
 
   const getUser = async () => {
-    const { data } = await axios.get(`/api/getUserById/${user?._id}`);
+    const { data } = await axios.get(`${URL}/api/getUserById/${user?._id}`);
   };
 
   const updateDp = (e) => {
@@ -61,7 +62,7 @@ const userProfile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     let userId = user?._id;
-    const { data } = await axios.patch(`/api/updateUser/${userId}`, {
+    const { data } = await axios.patch(`${URL}/api/updateUser/${userId}`, {
       name: input.name,
       email: input.email,
     });

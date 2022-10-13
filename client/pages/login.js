@@ -5,6 +5,7 @@ import { SyncOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import { Context } from "../context";
 import { useRouter } from "next/router";
+import { URL } from "../context/config";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -27,7 +28,7 @@ const Login = () => {
 
     try {
       setLoading(true);
-      const { data } = await axios.post(`/api/login`, {
+      const { data } = await axios.post(`${URL}/api/login`, {
         email,
         password,
       });
@@ -39,6 +40,7 @@ const Login = () => {
       window.localStorage.setItem("user", JSON.stringify(data));
       // redirect
       // router.push("/");
+      console.log("log:", data);
       toast.success("Login Successful!");
       setLoading(false);
       // console.log("Login Response", data);

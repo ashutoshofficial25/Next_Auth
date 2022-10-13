@@ -5,6 +5,7 @@ import { SyncOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import { Context } from "../context";
 import { useRouter } from "next/router";
+import { URL } from "../context/config";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -25,7 +26,7 @@ const Register = () => {
 
     try {
       setLoading(true);
-      const { data } = await axios.post(`/api/register`, {
+      const { data } = await axios.post(`${URL}/api/register`, {
         name,
         email,
         password,

@@ -12,6 +12,7 @@ import { Context } from "../context";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
+import { URL } from "../context/config";
 const { Item, SubMenu, ItemGroup } = Menu;
 
 const TopNav = () => {
@@ -29,7 +30,7 @@ const TopNav = () => {
       type: "LOGOUT",
     });
     window.localStorage.removeItem("user");
-    const data = await axios.get("/api/logout");
+    const data = await axios.get(`${URL}/api/logout`);
     toast(data.data.message);
     router.push("/login");
   };

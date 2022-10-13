@@ -12,6 +12,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { toast } from "react-toastify";
 import { red } from "@mui/material/colors";
 import { Context } from "../context";
+import { URL } from "../context/config";
 
 const TodoCard = ({ item, getTodos }) => {
   const { state } = useContext(Context);
@@ -19,7 +20,7 @@ const TodoCard = ({ item, getTodos }) => {
 
   const handleDelete = async (id) => {
     try {
-      const data = await axios.delete(`/api/delete/${id}`);
+      const data = await axios.delete(`${URL}/api/delete/${id}`);
       getTodos(user?._id);
       toast("deleted successfully");
     } catch (error) {

@@ -17,6 +17,7 @@ import { toast } from "react-toastify";
 import UserRoutes from "../components/routes/UserRoutes";
 import axios from "axios";
 import { Context } from "../context";
+import { URL } from "../context/config";
 
 const TodoPage = () => {
   const [open, setOpen] = useState(false);
@@ -37,7 +38,7 @@ const TodoPage = () => {
     e.preventDefault();
 
     try {
-      const { data } = await axios.post("/api/addTodo", {
+      const { data } = await axios.post(`${URL}/api/addTodo`, {
         title: input.taskTitle,
         taskDesc: input.taskDesc,
         userId: user._id,
@@ -64,7 +65,7 @@ const TodoPage = () => {
   };
 
   const getTodos = async (userId) => {
-    const { data } = await axios.get(`/api/${userId}`);
+    const { data } = await axios.get(`${URL}/api/${userId}`);
     setCard(data.data);
   };
 
